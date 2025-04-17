@@ -1,19 +1,12 @@
-import Acesso from "@/components/myui/Acesso/Acesso.tsx";
+import {BrowserRouter} from "react-router-dom";
+import AppRoutes from "@/routes";
 
 function App() {
   return (
     <>
-      <div>
-          <header className="flex justify-between items-center p-4 bg-gray-100 shadow">
-              <h1 className="text-lg font-semibold">Logo</h1>
-              <Acesso/>
-          </header>
-          <Acesso/>
-
-
-
-      </div>
-      
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
     </>
   )
 }
