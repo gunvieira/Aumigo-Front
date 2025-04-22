@@ -4,7 +4,7 @@ export function Botao(props: { children: string; }) {
     const textoinserido = props.children ? props.children : "Botao";
 
     return (
-        <Button className="bg-emerald-400 hover:bg-emerald-500 font-dosis cursor-pointer text-white font-medium " >
+        <Button size="sm" className="bg-emerald-400 hover:bg-emerald-500 font-dosis cursor-pointer text-white font-medium rounded text-[30px] " >
             {textoinserido}
         </Button>
     );
@@ -16,6 +16,16 @@ export function BotaoSegundario(props: { children: string; }) {
     return (
         <Button variant="secondary" size="sm" className="bg-gray-200 hover:bg-gray-300 font-dosis cursor-pointer font-medium rounded ">
             {textoinseridosec}
+        </Button>
+    );
+}
+
+export function BotaoGhost(props: { children: string; }) {
+    const textoinseridoter = props.children ? props.children : "Botao";
+
+    return (
+        <Button variant="ghost" size="sm" className=" font-dosis cursor-pointer font-medium rounded ">
+            {textoinseridoter}
         </Button>
     );
 }
