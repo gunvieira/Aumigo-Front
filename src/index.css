@@ -3,6 +3,7 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+
 @theme{
   --font-dosis: 'Dosis', sans-serif;
 }
@@ -122,3 +123,4 @@
     @apply bg-background text-foreground;
   }
 }
+
