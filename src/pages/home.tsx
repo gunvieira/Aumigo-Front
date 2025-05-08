@@ -1,22 +1,51 @@
 import Header from "@/components/myui/Header/Header.tsx";
-import Fotos from "@/components/myui/Banner/Banner2.tsx";
+import Banner from "@/components/myui/Banner/Banner.tsx";
+import Footer from "@/components/myui/Footer/Footer";
+import ConhecaSeuPet from "@/components/myui/Banner/ConhecaSeuPet.tsx";
 
 export default function Home() {
     return (
         <>
-
-                <Header/>
-
-
-
-            <section className="gap-3 bg-radial from-teal-300/50 from-50% to-teal-300/10 p-5">
-
-                    <div className=" flex flex-col w-full max-w-screen-xl mx-auto px-4 gap-3">
-                        <Fotos/>
+            <Header/>
+            <Banner/>
+            <ConhecaSeuPet/>
 
 
-                    </div>
-            </section>
+
+
+
+            <div>
+                -
+                -
+                -
+                -
+            </div>
+            <div>
+                -
+                -
+                -
+                -
+            </div>
+            <div>
+                -
+                -
+                -
+                -
+            </div>
+            <div>
+                -
+                -
+                -
+                -
+            </div>
+            <div>
+                -
+                -
+                -
+                -
+            </div>
+
+            <Footer/>
         </>
     );
 }
