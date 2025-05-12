@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "nome": "Milton",
+    "imagem": "/homemcomcachorro.jpg",
+    "sexo": "Macho",
+    "idade": "Adulto",
+    "porte": "Médio",
+    "especie": "Cachorro"
+  },
+  {
+    "id": 2,
+    "nome": "Luna",
+    "imagem": "/GatocomMulher.jpg",
+    "sexo": "Fêmea",
+    "idade": "Filhote",
+    "porte": "Pequeno",
+    "especie": "Gato"
+  }
+]

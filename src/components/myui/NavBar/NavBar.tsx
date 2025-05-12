@@ -5,8 +5,8 @@ export default function NavBar() {
         <div className="flex flex-row gap-0.5">
             <BotaoGhost to="/">Home</BotaoGhost>
             <BotaoGhost to="/quem-somos">Quem Somos</BotaoGhost>
-            <BotaoGhost to="/adotar">Adote</BotaoGhost>
-            <BotaoGhost to="/ajudar">Colabore</BotaoGhost>
+            <BotaoGhost to="/adote">Adote</BotaoGhost>
+            <BotaoGhost to="/colabore">Colabore</BotaoGhost>
         </div>
     );
 }

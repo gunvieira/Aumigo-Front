@@ -12,7 +12,7 @@ export default function Footer() {
                     <img
                         src="/logo.svg"
                         alt="Logo"
-                        className="h-12 w-auto"
+                        className="h-12 w-auto fill-emerald-400"
                     />
                     <span className="text-lg font-semibold">Adote um Pet</span>
                 </div>

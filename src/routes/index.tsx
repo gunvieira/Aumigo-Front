@@ -8,7 +8,7 @@ export default function AppRoutes() {
     return (
         <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/adotar" element={<Adotar/>} />
+            <Route path="/adote" element={<Adotar/>} />
             <Route path="/cadastro" element={<Botao to="/"> Cadastro </Botao>} />
             <Route path="/sobre" />
         </Routes>

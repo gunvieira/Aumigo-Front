@@ -59,15 +59,15 @@ export default function Banner() {
                                         combina com você?</h1>
                                 </div>
                                 <div className="flex flex-row justify-between w-full px-25 py-3">
-                                    <Botao to="/adotar" tsize="text-[25px]">Gato</Botao>
-                                    <Botao to="/adotar " tsize="text-[25px]">Cachorro</Botao>
+                                    <Botao to="/adote" tsize="text-[25px]" growOnHover>Gato</Botao>
+                                    <Botao to="/adote " tsize="text-[25px]" growOnHover>Cachorro</Botao>
                                 </div>
                             </div>
                         </div>
 
                         <div>
                             <img
-                                src="/gato.jpg"
+                                src="/Gatonagrama.jpg"
                                 alt="Imagem"
                                 className="flex w-auto h-[250px] rounded-md object-cover aspect-square border-2 shadow-md/30 border-teal-950"
                             />
