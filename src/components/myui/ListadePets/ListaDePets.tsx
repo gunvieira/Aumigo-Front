@@ -8,7 +8,7 @@ interface Pet {
     nome: string;
     sexo: "Macho" | "Fêmea";
     especie: "Cachorro" | "Gato";
-    idade: string;
+    tidade: string;
     porte: string;
     imagem: string;
 }
@@ -50,7 +50,7 @@ export function ListaDePets() {
                         nome={pet.nome}
                         imagem={pet.imagem}
                         sexo={pet.sexo}
-                        idade={pet.idade}
+                        tidade={pet.tidade}
                         porte={pet.porte}
                     />
                 ))}

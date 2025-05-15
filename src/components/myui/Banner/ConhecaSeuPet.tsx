@@ -19,7 +19,7 @@ export default function ConhecaSeuPet() {
                         <p className="text-2xl font-medium">Leais, carinhosos e sempre prontos para te receber com festa! Os cães adoram estar por perto, seja para um passeio, uma brincadeira ou só para ficar juntinho no sofá. São companheiros perfeitos para quem quer uma amizade cheia de energia e amor incondicional.</p>
                     </div>
                     <img
-                        src="/CachorroDesenho.png"
+                        src="/Imagens/TelaInicial/CachorroDesenho.png"
                         alt="Gato com fundo decorativo"
                         className="w-[200px] h-auto "
                     />
@@ -28,7 +28,7 @@ export default function ConhecaSeuPet() {
 
                     <div className="flex flex-row px-30 gap-8 items-center hover:bg-emerald-100 hover:shadow-xl transition-discrete duration-1000 pt-5 rounded-lg ease-in-out">
                     <img
-                        src="/GatoDesenho.png"
+                        src="/Imagens/TelaInicial/GatoDesenho.png"
                         alt="Gato com fundo decorativo"
                         className="w-[200px] h-auto "
                     />

@@ -11,21 +11,21 @@ export default function Banner() {
                     <div className="flex flex-row justify-between w-full ">
                         <div>
                             <img
-                                src="/mulhercomcachorro.jpg"
+                                src="/Imagens/TelaInicial/mulhercomcachorro.jpg"
                                 alt="Imagem"
                                 className="flex h-[200px] w-auto rounded-md object-cover aspect-video shadow-md/30 border-2 border-teal-950"
                             />
                         </div>
                         <div>
                             <img
-                                src="/GatocomMulher.jpg"
+                                src="/Imagens/TelaInicial/GatocomMulher.jpg"
                                 alt="Imagem"
                                 className="flex w-auto h-[200px] rounded-md object-cover aspect-square shadow-md/30 border-2 border-teal-950"
                             />
                         </div>
                         <div>
                             <img
-                                src="/gatocomhomem.jpg"
+                                src="/Imagens/TelaInicial/gatocomhomem.jpg"
                                 alt="Imagem"
                                 className="flex w-auto h-[200px] rounded-md object-cover aspect-square shadow-md/30 border-2 border-teal-950"
                             />
@@ -33,7 +33,7 @@ export default function Banner() {
 
                         <div>
                             <img
-                                src="/homemcomcachorro.jpg"
+                                src="/Imagens/TelaInicial/homemcomcachorro.jpg"
                                 alt="Imagem"
                                 className="flex h-[200px] w-auto rounded-md object-cover aspect-video border-2 shadow-md/30 border-teal-950"
                             />
@@ -44,7 +44,7 @@ export default function Banner() {
                     <div className="flex flex-row justify-between items-center w-full ">
                         <div>
                             <img
-                                src="/neguinha.png"
+                                src="/Imagens/TelaInicial/neguinha.png"
                                 alt="Imagem"
                                 className="flex w-auto h-[250px] rounded-md object-cover aspect-square border-2 shadow-md/30 border-teal-950 "
                             />
@@ -67,7 +67,7 @@ export default function Banner() {
 
                         <div>
                             <img
-                                src="/Gatonagrama.jpg"
+                                src="/Imagens/TelaInicial/Gatonagrama.jpg"
                                 alt="Imagem"
                                 className="flex w-auto h-[250px] rounded-md object-cover aspect-square border-2 shadow-md/30 border-teal-950"
                             />

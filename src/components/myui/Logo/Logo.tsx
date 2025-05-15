@@ -5,7 +5,7 @@ export default function Logo() {
         <div>
             <Link to="/">
             <img
-                src="/logo.svg"
+                src="/Imagens/Icons/logo.svg"
                 alt="Logo"
                 className="h-12 w-auto hover:contrast-75 cursor-default fill-emerald-400"
             />

@@ -78,8 +78,8 @@ export function BotaoAdote(props: {
         <Link to={to}>
             <Button
                 size="lg"
-                className={`scale-150 bg-emerald-600 hover:bg-emerald-700 font-dosis cursor-pointer px-10 py-5 font-bold text-white ${tsize ?? ""} 
-                    ${growOnHover ? "transition-transform duration-500 hover:scale-200 ease-in-out" : ""}`}
+                className={`scale-150 bg-emerald-400 hover:bg-emerald-500 font-dosis cursor-pointer px-10 py-5 font-bold text-white ${tsize ?? ""} 
+                    ${growOnHover ? "transition-transform duration-500 hover:scale-170 ease-in-out" : ""}`}
             >
                 {textoinserido}
             </Button>

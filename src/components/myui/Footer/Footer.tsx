@@ -10,7 +10,7 @@ export default function Footer() {
                 {/* Logo e título */}
                 <div className="w-fit text-emerald-400 p-3 rounded flex flex-col items-center">
                     <img
-                        src="/logo.svg"
+                        src="/Imagens/Icons/logo.svg"
                         alt="Logo"
                         className="h-12 w-auto fill-emerald-400"
                     />
