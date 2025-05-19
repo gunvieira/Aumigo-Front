@@ -43,8 +43,8 @@ export default function ConhecaSeuPet() {
         </section>
 
                 <br/>
-                <br/>
-                <br/>
+
+
             </div>
         </section>
     )

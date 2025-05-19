@@ -4,7 +4,7 @@ import {Botao} from "@/components/myui/BotaoPadrao/Botao.tsx";
 import Adotar from "@/pages/adotar.tsx";
 import Colabore from "@/pages/colabore.tsx";
 import TelaProcessos from "@/pages/processosusuario.tsx";
-import TelaLogin from "@/pages/entrar.tsx";
+import Entrar from "@/pages/entrar.tsx";
 
 
 export default function AppRoutes() {
@@ -16,7 +16,7 @@ export default function AppRoutes() {
             <Route path="/sobre" />
             <Route path="/colabore" element={<Colabore/>} />
             <Route path="/processos" element={<TelaProcessos/>} />
-            <Route path="/entrar" element={<TelaLogin/>} />
+            <Route path="/entrar" element={<Entrar/>} />
         </Routes>
 
     )
