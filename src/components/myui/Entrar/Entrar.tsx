@@ -1,50 +1,59 @@
+import React from 'react';
 import { FaUserPlus } from "react-icons/fa";
+import MyInput from "@/components/myui/Input/Input.tsx";
+import Checkbox from "@/components/myui/CheckBox/CheckBox.tsx";
+import BotaoEntrar from "@/components/myui/BotaoPadrao/Botao.tsx";
 
 
-export default function TelaLogin() {
+const TelaLogin: React.FC = () => {
     return (
-        <div className="min-h-screen max-w-screen flex items-center justify-center px-4">
-            {/* flex flex-col w-full items-center max-w-screen-xl mx-auto px-4*/}
-            <div className="bg-white shadow-lg rounded-md p-8 w-full max-w-sm">
-                <h1 className="text-2xl font-bold mb-6">Entrar</h1>
+        <div className="min-h-screen max-w-screen flex items-center justify-center ">
+            <div className="bg-emerald-100/50 shadow-lg rounded-md p-10 w-full max-w-xl">
+                <h1 className="text-3xl font-bold mb-8 text-emerald-700">Entrar</h1>
 
-                <div className="mb-4">
-                    <label htmlFor="email" className="block text-sm font-medium ">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Email"
-                        className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
-                    />
-                </div>
+                <MyInput
+                    id="email"
+                    type="email"
+                    label="Email"
+                    placeholder="Email"
+                />
 
                 <div className="mb-2">
-                    <label htmlFor="senha" className="block text-sm font-medium  mb-1">Senha</label>
-                    <div className="flex flex-col justify-between items-end">
-                        <input
-                            type="password"
-                            id="senha"
-                            placeholder="Senha"
-                            className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"
-                        />
-                        <a href="#" className="text-xs  ml-2 whitespace-nowrap">Esqueci a senha</a>
+                    <MyInput
+                        id="senha"
+                        type="password"
+                        label="Senha"
+                        placeholder="Senha"
+                        className="mb-0"
+                    />
+                    <div className="flex justify-end">
+                        <a href="#" className="text-xs text-emerald-600 hover:text-emerald-700 transition">
+                            Esqueci a senha
+                        </a>
                     </div>
                 </div>
 
-                <div className="flex items-center mt-4 mb-6">
-                    <input type="checkbox" id="lembrar" className="mr-2" />
-                    <label htmlFor="lembrar" className="text-sm ">Mantenha-me conectado</label>
+                <div className="mt-4 mb-8">
+                    <Checkbox
+                        id="lembrar"
+                        label="Mantenha-me conectado"
+                    />
                 </div>
 
-                <div className="flex gap-2">
-                    <button className="bg-[#4EC9B0] text-white px-4 py-2 rounded w-full hover:bg-[#3ba491] transition">
+                <div className="flex gap-3">
+                    <BotaoEntrar className="w-full">
                         Entrar
-                    </button>
-                    <button className="bg-[#4EC9B0] text-white px-4 py-2 rounded w-full flex items-center justify-center gap-2 hover:bg-[#3ba491] transition">
-                        Cadastre-se <FaUserPlus size={14} />
-                    </button>
+                    </BotaoEntrar>
+                    <BotaoEntrar
+                        className="w-full"
+                        icon={<FaUserPlus size={14} />}
+                    >
+                        Cadastre-se
+                    </BotaoEntrar>
                 </div>
             </div>
         </div>
     );
-}
+};
+
+export default TelaLogin;

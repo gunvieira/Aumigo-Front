@@ -1,5 +1,6 @@
 import {Button} from "@/components/ui/button";
 import {Link, useLocation} from "react-router";
+import React, { ReactNode } from 'react';
 
 interface BotaoGhostProps {
     children: string;
@@ -104,4 +105,45 @@ export function FiltroBotao({ isActive, onClick, children }: FiltroBotaoProps) {
         </button>
     );
 }
+
+
+
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    children: ReactNode;
+    className?: string;
+    variant?: 'primary' | 'secondary';
+    icon?: ReactNode;
+}
+
+const BotaoEntrar: React.FC<ButtonProps> = ({
+                                           children,
+                                           className = '',
+                                           variant = 'primary',
+                                           icon,
+                                           ...props
+                                       }) => {
+    const baseClasses = "px-4 py-2 rounded transition text-white font-medium";
+
+    const variantClasses = {
+        primary: "bg-emerald-500 hover:bg-emerald-600",
+        secondary: "bg-gray-500 hover:bg-gray-600"
+    };
+
+    return (
+        <button
+            className={`${baseClasses} ${variantClasses[variant]} ${className}`}
+            {...props}
+        >
+            <div className="flex items-center justify-center gap-2">
+                {children}
+                {icon && icon}
+            </div>
+        </button>
+    );
+};
+
+export default BotaoEntrar;
+
+
 
