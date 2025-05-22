@@ -8,7 +8,7 @@ import BotaoEntrar from "@/components/myui/BotaoPadrao/Botao.tsx";
 const TelaLogin: React.FC = () => {
     return (
         <div className="min-h-screen max-w-screen flex items-center justify-center ">
-            <div className="bg-emerald-100/50 shadow-lg rounded-md p-10 w-full max-w-xl">
+            <div className=" shadow-lg rounded-md p-10 w-full max-w-xl">
                 <h1 className="text-3xl font-bold mb-8 text-emerald-700">Entrar</h1>
 
                 <MyInput
