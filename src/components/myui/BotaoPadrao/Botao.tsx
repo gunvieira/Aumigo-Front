@@ -111,35 +111,40 @@ export function FiltroBotao({ isActive, onClick, children }: FiltroBotaoProps) {
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children: ReactNode;
+    to: string; // Prop específica para o Link
     className?: string;
     variant?: 'primary' | 'secondary';
     icon?: ReactNode;
 }
 
 const BotaoEntrar: React.FC<ButtonProps> = ({
-                                           children,
-                                           className = '',
-                                           variant = 'primary',
-                                           icon,
-                                           ...props
-                                       }) => {
+                                                children,
+                                                to, // 'to' é para o Link
+                                                className = '',
+                                                variant = 'primary',
+                                                icon,
+                                                ...buttonSpecificProps // Renomeado para clareza, são as props restantes para o <button>
+                                            }) => {
     const baseClasses = "px-4 py-2 rounded transition text-white font-medium";
+    // const {to} = props; // REMOVER ESTA LINHA - 'to' já está disponível e props.to seria undefined
 
     const variantClasses = {
-        primary: "bg-emerald-500 hover:bg-emerald-600",
+        primary: "bg-emerald-400 hover:bg-emerald-600",
         secondary: "bg-gray-500 hover:bg-gray-600"
     };
 
     return (
-        <button
-            className={`${baseClasses} ${variantClasses[variant]} ${className}`}
-            {...props}
-        >
-            <div className="flex items-center justify-center gap-2">
-                {children}
-                {icon && icon}
-            </div>
-        </button>
+        <Link to={to} className={className}>
+            <button
+                className={`${baseClasses} ${variantClasses[variant]} ${className}`}
+                {...buttonSpecificProps} // Agora 'to' definitivamente não está aqui
+            >
+                <div className="flex items-center justify-center gap-2">
+                    {children}
+                    {icon && icon}
+                </div>
+            </button>
+        </Link>
     );
 };
 

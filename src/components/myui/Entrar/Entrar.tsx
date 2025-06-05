@@ -8,7 +8,7 @@ import BotaoEntrar from "@/components/myui/BotaoPadrao/Botao.tsx";
 const TelaLogin: React.FC = () => {
     return (
         <div className="min-h-screen max-w-screen flex items-center justify-center ">
-            <div className=" shadow-lg rounded-md p-10 w-full max-w-xl">
+            <div className=" shadow-lg rounded-md p-10 w-full max-w-md">
                 <h1 className="text-3xl font-bold mb-8 text-emerald-700">Entrar</h1>
 
                 <MyInput
@@ -41,10 +41,12 @@ const TelaLogin: React.FC = () => {
                 </div>
 
                 <div className="flex gap-3">
-                    <BotaoEntrar className="w-full">
-                        Entrar
-                    </BotaoEntrar>
-                    <BotaoEntrar
+
+                        <BotaoEntrar to="/processos" className="w-full">
+                            Entrar
+                        </BotaoEntrar>
+
+                    <BotaoEntrar to = "/cadastro"
                         className="w-full"
                         icon={<FaUserPlus size={14} />}
                     >
