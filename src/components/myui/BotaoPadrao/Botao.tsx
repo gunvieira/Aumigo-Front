@@ -1,6 +1,6 @@
 import {Button} from "@/components/ui/button";
 import {Link, useLocation} from "react-router";
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 interface BotaoGhostProps {
     children: string;
@@ -109,46 +109,79 @@ export function FiltroBotao({ isActive, onClick, children }: FiltroBotaoProps) {
 
 
 
+
+
+// 1. Adicionamos a nova prop opcional 'isLoading'
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    children: ReactNode;
-    to: string; // Prop específica para o Link
+    children: React.ReactNode;
+    to?: string;
     className?: string;
     variant?: 'primary' | 'secondary';
-    icon?: ReactNode;
+    icon?: React.ReactNode;
+    isLoading?: boolean; // <-- NOVA PROP
 }
 
 const BotaoEntrar: React.FC<ButtonProps> = ({
                                                 children,
-                                                to, // 'to' é para o Link
+                                                to,
                                                 className = '',
                                                 variant = 'primary',
                                                 icon,
-                                                ...buttonSpecificProps // Renomeado para clareza, são as props restantes para o <button>
+                                                isLoading = false, // <-- NOVA PROP com valor padrão 'false'
+                                                ...rest
                                             }) => {
-    const baseClasses = "px-4 py-2 rounded transition text-white font-medium";
-    // const {to} = props; // REMOVER ESTA LINHA - 'to' já está disponível e props.to seria undefined
-
+    const baseClasses = "px-4 py-2 rounded transition text-white font-medium flex items-center justify-center gap-2";
     const variantClasses = {
         primary: "bg-emerald-400 hover:bg-emerald-600",
-        secondary: "bg-gray-500 hover:bg-gray-600"
+        secondary: "bg-gray-500 hover:bg-gray-600",
     };
 
-    return (
-        <Link to={to} className={className}>
-            <button
-                className={`${baseClasses} ${variantClasses[variant]} ${className}`}
-                {...buttonSpecificProps} // Agora 'to' definitivamente não está aqui
-            >
-                <div className="flex items-center justify-center gap-2">
+    // 2. Adicionamos classes condicionais para o estado de loading
+    const loadingClasses = isLoading ? 'opacity-75 cursor-not-allowed' : '';
+    const combinedClasses = `${baseClasses} ${variantClasses[variant]} ${loadingClasses} ${className}`;
+
+    // Componente Spinner para ser usado durante o loading
+    const Spinner = () => (
+        <div
+            className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"
+            role="status"
+            aria-live="polite"
+        >
+            <span className="sr-only">Carregando...</span>
+        </div>
+    );
+
+    const content = (
+        <>
+            {/* 3. O conteúdo do botão agora é condicional */}
+            {isLoading ? <Spinner /> : (
+                <>
                     {children}
                     {icon && icon}
-                </div>
-            </button>
-        </Link>
+                </>
+            )}
+        </>
+    );
+
+    if (to && !isLoading) { // Links de navegação não devem ter estado de loading
+        return (
+            <Link to={to} className={combinedClasses} {...rest}>
+                {content}
+            </Link>
+        );
+    }
+
+    return (
+        <button
+            className={combinedClasses}
+            // 4. O botão fica desabilitado se estiver carregando ou se a prop 'disabled' for passada
+            disabled={isLoading || rest.disabled}
+            {...rest}
+        >
+            {content}
+        </button>
     );
 };
 
 export default BotaoEntrar;
-
-
 

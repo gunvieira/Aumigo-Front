@@ -2,7 +2,7 @@ export default function ConteudoColabore() {
     return (
         <div className="flex flex-col items-center py-10 px-4 font-dosis">
             {/* Bloco 1 */}
-            <div className="flex flex-col bg-emerald-100 rounded-lg p-10 max-w-xl w-full gap-6 text-center mb-10 transition-discrete duration-1000 shadow-md hover:shadow-xl">
+            <div className="flex flex-col bg-gray-50 rounded-lg p-10 max-w-xl w-full gap-6 text-center mb-10 transition-discrete duration-1000 shadow-md hover:shadow-xl">
                 <h1 className="text-4xl font-bold mb-4">Colabore com a nossa missão</h1>
                 <p className="text-xl mb-4">
                     Nosso objetivo é dar visibilidade aos cães e gatos que estão procurando um lar e conectá-los com pessoas que querem ter um bichinho.
