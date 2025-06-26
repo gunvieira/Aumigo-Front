@@ -1,14 +1,17 @@
-import {Botao} from "@/components/myui/BotaoPadrao/Botao.tsx";
-import DetalhesProcesso from "./detalhesprocessosusuarios";
+import {Botao, BotaoGhost, BotaoSegundario} from "@/components/myui/BotaoPadrao/Botao.tsx";
+import DetalhesProcesso from "@/components/myui/DetalhesProcessos/DetalhesProcesso.tsx";
+import {Button} from "@/components/ui/button.tsx";
 
-export default function TelaProcessos() {
+
+export default function ConteudoProcessos() {
     return (
         <div className="min-h-screen bg-white flex">
-            {/* Menu lateral */}
+            {/* Arrumar Botoes */}
             <aside className="w-48 bg-white p-6 border-r border-gray-200">
                 <h2 className="text-lg font-semibold mb-10">Minha conta</h2>
                 <nav className="flex flex-col gap-4">
-                    <button className="bg-[#4EC9B0] text-white py-2 px-4 rounded">Dados pessoais</button>
+                    <Botao to="/dadospessoais" tsize="text-[18px]">Dados Pessoais</Botao>
+                    <Button size="lg" className="bg-emerald-400 hover:bg-emerald-500 font-dosis cursor-pointer text-white text-[18px]">Dados Pessoais</Button>
                     <button className="bg-[#4EC9B0] text-white py-2 px-4 rounded">Processos</button>
                     <Botao to="/" tsize="text-[18px]">Sair</Botao>
                 </nav>
