@@ -17,27 +17,14 @@ export default function ConteudoDadosPessoais() {
     };
 
     return (
+        <div className="flex flex-col w-full max-w-screen-xl mx-auto gap-6">
         <div className="min-h-screen bg-white flex">
-            {/* Menu Lateral:
-              - A estrutura é a mesma do componente anterior.
-              - O botão "Dados pessoais" agora tem o estilo de ativo (fundo sólido).
-              - O botão "Processos" tem um estilo de inativo (fundo transparente com borda),
-                para mostrar qual página não está selecionada.
-            */}
-            <aside className="w-48 bg-white p-6 border-r border-gray-200 flex flex-col">
+            <aside className="w-48 bg-white p-6 px-5 border-r border-gray-200 flex flex-col">
                 <h2 className="text-lg font-semibold mb-10">Minha conta</h2>
                 <nav className="flex flex-col gap-4">
-                    {/* Botão ativo */}
-                    <button className="bg-[#4EC9B0] text-white py-2 px-4 rounded-md">
-                        Dados pessoais
-                    </button>
-                    {/* Botão inativo */}
-                    <button className="bg-white border border-[#4EC9B0] text-[#4EC9B0] py-2 px-4 rounded-md hover:bg-[#E6F6F3] transition">
-                        Processos
-                    </button>
-                    <Botao to="/processos" tsize="text-[18px]">Processos</Botao>
-                    {/* O componente de botão "Sair" é reutilizado */}
-                    <Botao to="/" tsize="text-[18px]">Sair</Botao>
+                    <Botao to="#" tsize="text-[18px]" customClasses="w-40" >Dados Pessoais</Botao>
+                    <Botao to="/processos" tsize="text-[18px]" customClasses="w-40">Processos</Botao>
+                    <Botao to="/" tsize="text-[18px]" customClasses="w-40">Sair</Botao>
                 </nav>
             </aside>
 
@@ -63,6 +50,7 @@ export default function ConteudoDadosPessoais() {
                     <CampoDeDados label="Cidade" value={dadosUsuario.cidade} />
                 </div>
             </main>
+        </div>
         </div>
     );
 }

@@ -1,19 +1,19 @@
-import {Botao, BotaoGhost, BotaoSegundario} from "@/components/myui/BotaoPadrao/Botao.tsx";
+import {Botao} from "@/components/myui/BotaoPadrao/Botao.tsx";
 import DetalhesProcesso from "@/components/myui/DetalhesProcessos/DetalhesProcesso.tsx";
-import {Button} from "@/components/ui/button.tsx";
+
 
 
 export default function ConteudoProcessos() {
     return (
+        <div className="flex flex-col w-full max-w-screen-xl mx-auto gap-6">
         <div className="min-h-screen bg-white flex">
             {/* Arrumar Botoes */}
-            <aside className="w-48 bg-white p-6 border-r border-gray-200">
+            <aside className="w-48 bg-white p-6 px-5 border-r border-gray-200">
                 <h2 className="text-lg font-semibold mb-10">Minha conta</h2>
                 <nav className="flex flex-col gap-4">
-                    <Botao to="/dadospessoais" tsize="text-[18px]">Dados Pessoais</Botao>
-                    <Button size="lg" className="bg-emerald-400 hover:bg-emerald-500 font-dosis cursor-pointer text-white text-[18px]">Dados Pessoais</Button>
-                    <button className="bg-[#4EC9B0] text-white py-2 px-4 rounded">Processos</button>
-                    <Botao to="/" tsize="text-[18px]">Sair</Botao>
+                    <Botao to="/dadospessoais" tsize="text-[18px]" customClasses="w-40" >Dados Pessoais</Botao>
+                    <Botao to="#" tsize="text-[18px]" customClasses="w-40">Processos</Botao>
+                    <Botao to="/" tsize="text-[18px]" customClasses="w-40">Sair</Botao>
                 </nav>
             </aside>
 
@@ -56,6 +56,7 @@ export default function ConteudoProcessos() {
                     </table>
                 </div>
             </main>
+        </div>
         </div>
     );
 }

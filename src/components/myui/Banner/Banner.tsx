@@ -59,8 +59,8 @@ export default function Banner() {
                                         combina com você?</h1>
                                 </div>
                                 <div className="flex flex-row justify-between w-full px-25 py-3">
-                                    <Botao to="/adote" tsize="text-[25px]" growOnHover>Gato</Botao>
-                                    <Botao to="/adote " tsize="text-[25px]" growOnHover>Cachorro</Botao>
+                                    <Botao to="/adote?especie=Gato" tsize="text-[25px]" growOnHover>Gato</Botao>
+                                    <Botao to="/adote?especie=Cachorro" tsize="text-[25px]" growOnHover>Cachorro</Botao>
                                 </div>
                             </div>
                         </div>

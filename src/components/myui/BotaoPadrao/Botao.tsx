@@ -12,23 +12,26 @@ export function Botao(props: {
     to: string;
     tsize?: string;
     growOnHover?: boolean;
+    customClasses?: string; // <-- Adicione esta nova prop
 }) {
     const textoinserido = props.children ?? "Botão";
-    const { to, tsize, growOnHover } = props;
+    const { to, tsize, growOnHover, customClasses } = props;
 
     return (
         <Link to={to}>
             <Button
                 size="lg"
-                className={`bg-emerald-400 hover:bg-emerald-500 font-dosis cursor-pointer text-white ${tsize ?? ""} 
-                    ${growOnHover ? "transition-transform duration-500 hover:scale-110 ease-in-out" : ""}`}
+                className={`bg-emerald-400 hover:bg-emerald-500 font-dosis cursor-pointer text-white 
+                    ${tsize ?? ""} 
+                    ${growOnHover ? "transition-transform duration-500 hover:scale-110 ease-in-out" : ""}
+                    ${customClasses ?? ""}` // <-- Use a nova prop aqui
+                }
             >
                 {textoinserido}
             </Button>
         </Link>
     );
 }
-
 export function BotaoSegundario(props: { children: string; to: string }) {
     const textoinseridosec = props.children ? props.children : "Botao";
     const to = props.to ?? "#";
@@ -130,9 +133,9 @@ const BotaoEntrar: React.FC<ButtonProps> = ({
                                                 isLoading = false, // <-- NOVA PROP com valor padrão 'false'
                                                 ...rest
                                             }) => {
-    const baseClasses = "px-4 py-2 rounded transition text-white font-medium flex items-center justify-center gap-2";
+    const baseClasses = "px-4 py-2 rounded-md transition text-white font-medium flex items-center justify-center gap-2";
     const variantClasses = {
-        primary: "bg-emerald-400 hover:bg-emerald-600",
+        primary: "bg-emerald-400 hover:bg-emerald-500",
         secondary: "bg-gray-500 hover:bg-gray-600",
     };
 
@@ -172,14 +175,15 @@ const BotaoEntrar: React.FC<ButtonProps> = ({
     }
 
     return (
-        <button
+        <Button
+            size="lg"
             className={combinedClasses}
             // 4. O botão fica desabilitado se estiver carregando ou se a prop 'disabled' for passada
             disabled={isLoading || rest.disabled}
             {...rest}
         >
             {content}
-        </button>
+        </Button>
     );
 };
 
