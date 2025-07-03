@@ -27,7 +27,7 @@ const TelaLogin: React.FC = () => {
                         className="mb-0"
                     />
                     <div className="flex justify-end">
-                        <a href="#" className="text-xs text-emerald-600 hover:text-emerald-700 transition">
+                        <a href="/" className="text-xs text-emerald-600 hover:text-emerald-700 transition">
                             Esqueci a senha
                         </a>
                     </div>

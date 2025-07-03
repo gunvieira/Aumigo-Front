@@ -7,7 +7,6 @@ export default function ConteudoProcessos() {
     return (
         <div className="flex flex-col w-full max-w-screen-xl mx-auto gap-6">
         <div className="min-h-screen bg-white flex">
-            {/* Arrumar Botoes */}
             <aside className="w-48 bg-white p-6 px-5 border-r border-gray-200">
                 <h2 className="text-lg font-semibold mb-10">Minha conta</h2>
                 <nav className="flex flex-col gap-4">
