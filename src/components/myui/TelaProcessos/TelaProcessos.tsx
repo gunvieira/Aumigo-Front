@@ -12,7 +12,9 @@ export default function ConteudoProcessos() {
                 <nav className="flex flex-col gap-4">
                     <Botao to="/dadospessoais" tsize="text-[18px]" customClasses="w-40" >Dados Pessoais</Botao>
                     <Botao to="#" tsize="text-[18px]" customClasses="w-40">Processos</Botao>
+                    <Botao to="/cadastraranimal" tsize="text-[18px]" customClasses="w-40">Cadastrar animal</Botao>
                     <Botao to="/" tsize="text-[18px]" customClasses="w-40">Sair</Botao>
+
                 </nav>
             </aside>
 

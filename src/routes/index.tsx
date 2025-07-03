@@ -9,7 +9,9 @@ import Cadastrar from "@/pages/cadastrar.tsx";
 import CadastrarEndereco from "@/pages/cadastrarEndereco.tsx";
 import TelaDadosPessoais from "@/pages/teladadospessoais.tsx";
 import {PaginaDetalhesPet} from "@/components/myui/infoPets/InfoPets.tsx";
-import TelaCadastrarAnimal from "@/components/myui/TelaCadastrarAnimal/TelaCadstrarAnimal.tsx";
+
+
+import TelacadastrarAnimal from "@/pages/telacadastraranimal.tsx";
 
 
 
@@ -26,7 +28,7 @@ export default function AppRoutes() {
             <Route path="/cadastro" element={<Cadastrar/>} />
             <Route path="/pet/:petId" element={<PaginaDetalhesPet />} />
             <Route path="/cadastro/endereco" element={<CadastrarEndereco/>} />
-            <Route path="/cadastraranimal" element={<TelaCadastrarAnimal/>} />
+            <Route path="/cadastraranimal" element={<TelacadastrarAnimal/>} />
         </Routes>
 
     )
