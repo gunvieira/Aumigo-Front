@@ -7,31 +7,53 @@ interface BotaoGhostProps {
     to: string;
 }
 
-export function Botao(props: {
+// 1. Defina as props corretamente em uma interface
+interface BotaoProps {
     children?: string;
-    to: string;
+    to?: string; // 'to' agora é opcional
     tsize?: string;
     growOnHover?: boolean;
-    customClasses?: string; // <-- Adicione esta nova prop
-}) {
-    const textoinserido = props.children ?? "Botão";
-    const { to, tsize, growOnHover, customClasses } = props;
+    customClasses?: string;
+    onClick?: () => void; // 'onClick' é opcional e é uma função que não retorna nada
+}
+
+export function Botao(props: BotaoProps) {
+    const {
+        children,
+        to,
+        tsize,
+        growOnHover,
+        customClasses,
+        onClick
+    } = props;
+
+    const textoinserido = children ?? "Botão";
+
+    // Classes de estilo que serão usadas em ambos os casos
+    const buttonClassName = `bg-emerald-400 hover:bg-emerald-500 font-dosis cursor-pointer text-white 
+        ${tsize ?? ""} 
+        ${growOnHover ? "transition-transform duration-500 hover:scale-110 ease-in-out" : ""}
+        ${customClasses ?? ""}
+    `;
+
+    // 2. Lógica condicional: Se 'to' existir, renderiza um Link. Senão, um botão normal.
+    if (to) {
+        return (
+            <Link to={to} onClick={onClick}>
+                <Button size="lg" className={buttonClassName}>
+                    {textoinserido}
+                </Button>
+            </Link>
+        );
+    }
 
     return (
-        <Link to={to}>
-            <Button
-                size="lg"
-                className={`bg-emerald-400 hover:bg-emerald-500 font-dosis cursor-pointer text-white 
-                    ${tsize ?? ""} 
-                    ${growOnHover ? "transition-transform duration-500 hover:scale-110 ease-in-out" : ""}
-                    ${customClasses ?? ""}` // <-- Use a nova prop aqui
-                }
-            >
-                {textoinserido}
-            </Button>
-        </Link>
+        <Button size="lg" className={buttonClassName} onClick={onClick}>
+            {textoinserido}
+        </Button>
     );
 }
+
 export function BotaoSegundario(props: { children: string; to: string }) {
     const textoinseridosec = props.children ? props.children : "Botao";
     const to = props.to ?? "#";
@@ -168,7 +190,7 @@ const BotaoEntrar: React.FC<ButtonProps> = ({
 
     if (to && !isLoading) { // Links de navegação não devem ter estado de loading
         return (
-            <Link to={to} className={combinedClasses} {...rest}>
+            <Link to={to} className={combinedClasses}>
                 {content}
             </Link>
         );

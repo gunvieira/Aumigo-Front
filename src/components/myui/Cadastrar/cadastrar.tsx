@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import MyInput from "@/components/myui/Input/Input.tsx";
 import BotaoEntrar from "@/components/myui/BotaoPadrao/Botao.tsx";
+import {useAuth} from "@/context/AuthContext.tsx";
 
 export default function TelaCadastro() {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
+    const { login } = useAuth();
 
     const [formData, setFormData] = useState({
         nome: '',
@@ -161,13 +163,14 @@ export default function TelaCadastro() {
         }
 
         setIsLoading(true);
-        console.log("Dados a serem enviados:", JSON.stringify(formData, null, 2));
+
 
         try {
             const response = await axios.post('http://localhost:8080/cadastro', formData);
             alert('Cadastro realizado com sucesso! ✅');
             console.log('Dados da resposta:', response.data);
-            navigate('/processos')
+            login(response.data.idUsuario);
+            navigate('/dadospessoais')
 
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
