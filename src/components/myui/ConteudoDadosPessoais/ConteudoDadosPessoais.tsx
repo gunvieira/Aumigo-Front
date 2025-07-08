@@ -71,6 +71,15 @@ export default function ConteudoDadosPessoais() {
     }, []); // O array de dependências vazio [] garante que este código rode apenas uma vez,
     // quando o componente é montado na tela.
 
+    const [podeCadastrar, setPodeCadastrar] = useState<boolean>(false);
+
+    useEffect(() => {
+        const tipoUsuario: string | null = sessionStorage.getItem('tipoUsuario');
+        if (tipoUsuario !== '1') {
+            setPodeCadastrar(true);
+        }
+    }, []);
+
     return (
         <div className="flex flex-col w-full max-w-screen-xl mx-auto gap-6">
             <div className="min-h-screen bg-white flex">
@@ -79,6 +88,13 @@ export default function ConteudoDadosPessoais() {
                     <nav className="flex flex-col gap-4">
                         <Botao to="#" tsize="text-[18px]" customClasses="w-40">Dados Pessoais</Botao>
                         <Botao to="/processos" tsize="text-[18px]" customClasses="w-40">Processos</Botao>
+
+                        {podeCadastrar && (
+                            <Botao to="/cadastraranimal" tsize="text-[18px]" customClasses="w-40">
+                                Cadastrar animal
+                            </Botao>
+                        )}
+
                         <Botao onClick={handleLogout} tsize="text-[18px]" customClasses="w-40">Sair</Botao>
                     </nav>
                 </aside>

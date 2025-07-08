@@ -1,0 +1,74 @@
+[
+  {
+    "id_adocao": 1,
+    "data_solicitacao": "2024-07-23T10:00:00Z",
+    "status": "PENDENTE",
+    "animal": {
+      "id_animal": 101,
+      "nome": "Rex",
+      "imagem": "https://i.ibb.co/ycFNmjxm/golden-retriever-1.webp",
+      "porte": "Médio",
+      "sexo": "Macho",
+      "raca": {
+        "nome_raca": "Labrador Retriever",
+        "especie": {
+          "nome_especie": "Cachorro"
+        }
+      }
+    },
+    "usuario": {
+      "id_usuario": 1001,
+      "nome": "Ana Silva",
+      "email": "ana.silva@example.com",
+      "telefone": "+5511987654321"
+    }
+  },
+  {
+    "id_adocao": 2,
+    "data_solicitacao": "2024-07-24T14:30:00Z",
+    "status": "APROVADO",
+    "animal": {
+      "id_animal": 202,
+      "nome": "Mimi",
+      "imagem": "https://i.ibb.co/Y7q48Q3z/CAdote3.jpg",
+      "porte": "Pequeno",
+      "sexo": "Fêmea",
+      "raca": {
+        "nome_raca": "Siamês",
+        "especie": {
+          "nome_especie": "Gato"
+        }
+      }
+    },
+    "usuario": {
+      "id_usuario": 1002,
+      "nome": "Carlos Oliveira",
+      "email": "carlos.o@example.com",
+      "telefone": "+5521912345678"
+    }
+  },
+  {
+    "id_adocao": 3,
+    "data_solicitacao": "2024-07-25T09:15:00Z",
+    "status": "RECUSADO",
+    "animal": {
+      "id_animal": 303,
+      "nome": "Thor",
+      "imagem": "https://i.ibb.co/ZpynH8sZ/CAdote1.jpg",
+      "porte": "Grande",
+      "sexo": "Macho",
+      "raca": {
+        "nome_raca": "Golden Retriever",
+        "especie": {
+          "nome_especie": "Cachorro"
+        }
+      }
+    },
+    "usuario": {
+      "id_usuario": 1003,
+      "nome": "Mariana Costa",
+      "email": "mari.costa@example.com",
+      "telefone": "+5531999887766"
+    }
+  }
+]

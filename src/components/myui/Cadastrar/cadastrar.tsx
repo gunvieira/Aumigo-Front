@@ -170,6 +170,7 @@ export default function TelaCadastro() {
             alert('Cadastro realizado com sucesso! ✅');
             console.log('Dados da resposta:', response.data);
             login(response.data.idUsuario);
+            sessionStorage.setItem('tipoUsuario', String(response.data.tipoUsuario));
             navigate('/dadospessoais')
 
         } catch (error) {

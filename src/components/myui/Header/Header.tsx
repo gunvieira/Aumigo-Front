@@ -7,7 +7,7 @@ import {Link} from "react-router";
 
 
 export default function Header() {
-    const { isLoggedIn} = useAuth();
+    const {isLoggedIn} = useAuth();
 
     return (
         <div className="shadow-sm/5 ">

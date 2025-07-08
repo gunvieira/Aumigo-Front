@@ -14,6 +14,7 @@ export default function Teste() {
             sessionStorage.setItem('id', String(response.data.idUsuario));
             alert('Cadastro realizado com sucesso! ✅');
             console.log('Dados da resposta:', response.data);
+            sessionStorage.setItem('tipoUsuario', '1');
 
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
