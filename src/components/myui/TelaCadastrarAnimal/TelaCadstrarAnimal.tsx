@@ -12,8 +12,8 @@ export default function CadastrarAnimal() {
     // --- ESTADOS DO COMPONENTE ---
     const [formData, setFormData] = useState({
         nome: '',
+        dataNasc: '',
         raca: '',
-        dataNascimento: '',
         especie: '',
         sexo: '',
         porte: 'Pequeno',
@@ -22,7 +22,7 @@ export default function CadastrarAnimal() {
     const [errors, setErrors] = useState({
         nome: '',
         raca: '',
-        dataNascimento: '',
+        dataNasc: '',
         especie: '',
         sexo: '',
         foto: '',
@@ -40,7 +40,7 @@ export default function CadastrarAnimal() {
         const tempErrors = {
             nome: '',
             raca: '',
-            dataNascimento: '',
+            dataNasc: '',
             especie: '',
             sexo: '',
             foto: '',
@@ -55,8 +55,11 @@ export default function CadastrarAnimal() {
             tempErrors.raca = 'O campo Raça é obrigatório.';
             isValid = false;
         }
-        if (!formData.dataNascimento.trim()) {
-            tempErrors.dataNascimento = 'O campo Data de Nascimento é obrigatório.';
+        if (!formData.dataNasc.trim()) {
+            tempErrors.dataNasc = 'O campo Data de Nascimento é obrigatório.';
+            isValid = false;
+        } else if (!/^\d{2}\/\d{2}\/\d{4}$/.test(formData.dataNasc)) { // Validação simples do formato da data
+            tempErrors.dataNasc = 'Formato de data inválido. Use DD/MM/AAAA.';
             isValid = false;
         }
         if (!formData.especie) {
@@ -67,7 +70,6 @@ export default function CadastrarAnimal() {
             tempErrors.sexo = 'Por favor, selecione o sexo.';
             isValid = false;
         }
-        //
         if (!selectedFile) {
             tempErrors.foto = 'A foto do animal é obrigatória.';
             isValid = false;
@@ -93,16 +95,12 @@ export default function CadastrarAnimal() {
         }
     };
 
-
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-
-        // Reseta o input para permitir selecionar o mesmo arquivo novamente após um erro
         e.target.value = '';
 
         if (!file) return;
 
-        // 1. Validação de tipo de arquivo
         if (!ALLOWED_FILE_TYPES.includes(file.type)) {
             setErrors(prev => ({ ...prev, foto: 'Tipo de arquivo inválido. Use JPG, PNG, GIF ou WEBP.' }));
             setSelectedFile(null);
@@ -110,15 +108,13 @@ export default function CadastrarAnimal() {
             return;
         }
 
-        // 2. Validação de tamanho do arquivo
-        if (file.size > MAX_FILE_SIZE_MB * 2024 * 2024) {
+        if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) { // Corrigido para MB
             setErrors(prev => ({ ...prev, foto: `O arquivo é muito grande. Máximo: ${MAX_FILE_SIZE_MB}MB.` }));
             setSelectedFile(null);
             setPreviewUrl(null);
             return;
         }
 
-        // Se o arquivo for válido, limpa qualquer erro anterior e atualiza o estado
         setErrors(prev => ({ ...prev, foto: '' }));
         setSelectedFile(file);
         if (previewUrl) {
@@ -126,7 +122,6 @@ export default function CadastrarAnimal() {
         }
         setPreviewUrl(URL.createObjectURL(file));
     };
-
 
     // Função para lidar com a submissão do formulário
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -138,23 +133,18 @@ export default function CadastrarAnimal() {
         }
 
         setIsSubmitting(true);
-        let imageUrl = '';
+        let midiaImagem = '';
 
-        // O 'selectedFile' já foi validado, então podemos prosseguir com o upload
         if (selectedFile) {
             try {
                 const imgbbFormData = new FormData();
                 imgbbFormData.append('image', selectedFile);
-
                 const imgbbApiKey = '3c5d80cd1bcb454aa7cbb09f05b9e101';
-
                 const imgbbResponse = await axios.post(
                     `https://api.imgbb.com/1/upload?key=${imgbbApiKey}`,
                     imgbbFormData
                 );
-
-                imageUrl = imgbbResponse.data.data.url;
-
+                midiaImagem = imgbbResponse.data.data.url;
             } catch (error) {
                 console.error('Erro ao fazer upload para o imgbb:', error);
                 setSubmitStatus({
@@ -167,17 +157,36 @@ export default function CadastrarAnimal() {
         }
 
         try {
-            const dataToSubmit = { ...formData, imageUrl };
-            console.log('Dados a serem enviados para o servidor:', dataToSubmit);
 
+            const idString = sessionStorage.getItem('id');
+            const status = "cadastrado";
+            // 2. VERIFICA e CONVERTE a string para um número
+            if (!idString) {
+                setSubmitStatus({ message: 'Erro: Usuário não autenticado.', type: 'error' });
+                setIsSubmitting(false);
+                return;
+            }
+            const idUsuario = parseInt(idString, 10);
+            const [dia, mes, ano] = formData.dataNasc.split('/');
+            const dataFormatada = `${ano}-${mes}-${dia}`;
+
+            const dataToSubmit = {
+                ...formData,
+                dataNasc: dataFormatada, // Usa a data formatada
+                midiaImagem,
+                idUsuario: idUsuario,
+                status: status
+            };
+
+            console.log('Dados a serem enviados para o servidor:', dataToSubmit);
+            const response = await axios.post('http://localhost:8080/animais', dataToSubmit);
+            console.log('Resposta do servidor:', response.data); // Corrigido para 'Resposta do servidor'
             setSubmitStatus({ message: 'Animal cadastrado com sucesso!', type: 'success' });
 
-            // Resetar o formulário
             setFormData({
-                nome: '', raca: '', dataNascimento: '', especie: '', sexo: '', porte: 'Pequeno',
+                nome: '', raca: '', dataNasc: '', especie: '', sexo: '', porte: 'Pequeno',
             });
-            // <-- ALTERAÇÃO: Limpa o erro da foto ao resetar
-            setErrors({ nome: '', raca: '', dataNascimento: '', especie: '', sexo: '', foto: '' });
+            setErrors({ nome: '', raca: '', dataNasc: '', especie: '', sexo: '', foto: '' });
             setSelectedFile(null);
             setPreviewUrl(null);
 
@@ -212,7 +221,6 @@ export default function CadastrarAnimal() {
                         <div className="flex flex-col lg:flex-row gap-10">
                             {/* Formulário de Cadastro */}
                             <div className="flex flex-col gap-4 flex-grow">
-                                {/* ... (resto do seu formulário, sem alterações aqui) ... */}
                                 <div className="flex flex-wrap gap-10 items-start">
                                     <div>
                                         <h3 className="font-medium mb-2 text-sm text-gray-700">Espécie:</h3>
@@ -220,12 +228,14 @@ export default function CadastrarAnimal() {
                                             <label className="flex items-center gap-2 cursor-pointer">
                                                 <input type="radio" name="especie" value="Cachorro"
                                                        onChange={handleChange}
+                                                       checked={formData.especie === 'Cachorro'} // Boa prática: controle o estado do radio
                                                        className="h-4 w-4 text-[#4EC9B0] focus:ring-[#4EC9B0] border-gray-300"/>
                                                 Cachorro
                                             </label>
 
                                             <label className="flex items-center gap-2 cursor-pointer">
                                                 <input type="radio" name="especie" value="Gato" onChange={handleChange}
+                                                       checked={formData.especie === 'Gato'} // Boa prática: controle o estado do radio
                                                        className="h-4 w-4 text-[#4EC9B0] focus:ring-[#4EC9B0] border-gray-300"/>
                                                 Gato
                                             </label>
@@ -237,11 +247,13 @@ export default function CadastrarAnimal() {
                                         <div className="flex gap-4">
                                             <label className="flex items-center gap-2 cursor-pointer">
                                                 <input type="radio" name="sexo" value="Macho" onChange={handleChange}
+                                                       checked={formData.sexo === 'Macho'} // Boa prática: controle o estado do radio
                                                        className="h-4 w-4 text-[#4EC9B0] focus:ring-[#4EC9B0] border-gray-300"/>
                                                 Macho
                                             </label>
                                             <label className="flex items-center gap-2 cursor-pointer">
                                                 <input type="radio" name="sexo" value="Femea" onChange={handleChange}
+                                                       checked={formData.sexo === 'Femea'} // Boa prática: controle o estado do radio
                                                        className="h-4 w-4 text-[#4EC9B0] focus:ring-[#4EC9B0] border-gray-300"/>
                                                 Fêmea
                                             </label>
@@ -276,14 +288,14 @@ export default function CadastrarAnimal() {
                                 <div className="flex flex-col sm:flex-row gap-6">
                                     <div className="w-full sm:w-1/2">
                                         <MyInput
-                                            id="dataNascimento"
-                                            name="dataNascimento"
+                                            id="dataNasc"
+                                            name="dataNasc"
                                             label="Data de Nascimento"
                                             type="text"
-                                            placeholder="01/01/2020"
-                                            value={formData.dataNascimento}
+                                            placeholder="DD/MM/AAAA" // Alterado para refletir a máscara
+                                            value={formData.dataNasc}
                                             onChange={handleChange}
-                                            error={errors.dataNascimento}
+                                            error={errors.dataNasc}
                                             applyDateMask
                                         />
                                     </div>
@@ -299,7 +311,7 @@ export default function CadastrarAnimal() {
                             </div>
 
                             {/* Upload de Foto */}
-                            <div className="flex flex-col"> {/* <-- ALTERAÇÃO: Wrapper para o upload e a mensagem de erro */}
+                            <div className="flex flex-col">
                                 <label htmlFor="file-upload" className={`flex flex-col items-center justify-center w-full lg:w-72 h-72 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-50 transition-colors bg-cover bg-center ${errors.foto ? 'border-red-500' : 'border-gray-300'}`} style={{ backgroundImage: previewUrl ? `url(${previewUrl})` : 'none' }}>
                                     {!previewUrl && (
                                         <div className="text-center">

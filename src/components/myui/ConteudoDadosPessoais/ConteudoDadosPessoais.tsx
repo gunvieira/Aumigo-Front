@@ -56,7 +56,7 @@ export default function ConteudoDadosPessoais() {
         if (usuarioId) {
             // 3. Usamos Template Literals (crase ``) para montar a URL dinâmica.
             //    Note o `${usuarioId}` e o parêntese fechando o get() antes do .then
-            axios.get<dadosUsuario>(`http://localhost:8080/${usuarioId}`)
+            axios.get<dadosUsuario>(`http://localhost:8080/users/${usuarioId}`)
                 .then((response) => {
                     setDados(response.data);
                 })

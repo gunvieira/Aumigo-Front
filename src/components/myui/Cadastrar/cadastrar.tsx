@@ -166,7 +166,7 @@ export default function TelaCadastro() {
 
 
         try {
-            const response = await axios.post('http://localhost:8080/cadastro', formData);
+            const response = await axios.post('http://localhost:8080/users', formData);
             alert('Cadastro realizado com sucesso! ✅');
             console.log('Dados da resposta:', response.data);
             login(response.data.idUsuario);

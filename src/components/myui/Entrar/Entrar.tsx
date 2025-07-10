@@ -7,6 +7,7 @@ import { FaUserPlus } from "react-icons/fa";
 import MyInput from "@/components/myui/Input/Input.tsx";
 import Checkbox from "@/components/myui/CheckBox/CheckBox.tsx";
 import BotaoEntrar from "@/components/myui/BotaoPadrao/Botao.tsx";
+import {useAuth} from "@/context/AuthContext.tsx";
 
 const TelaLogin: React.FC = () => {
     // Estado para armazenar os valores dos campos de entrada
@@ -19,6 +20,7 @@ const TelaLogin: React.FC = () => {
 
     // Hook do react-router-dom para navegar o utilizador programaticamente
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     /**
      * Lida com a submissão do formulário.
@@ -35,7 +37,7 @@ const TelaLogin: React.FC = () => {
         try {
             // Envia um pedido POST para o seu endpoint /login
             // O corpo do pedido corresponde ao `LoginUserDTO` esperado pelo seu controlador Spring
-            const response = await axios.post('http://localhost:8080/login', {
+            const response = await axios.post('http://localhost:8080/users/login', {
                 email: email,
                 senha: senha,
             });
@@ -43,6 +45,8 @@ const TelaLogin: React.FC = () => {
             // Se o pedido for bem-sucedido (status 200 OK), o backend retorna os dados do utilizador.
             // Pode armazenar os dados do utilizador no contexto ou no armazenamento local aqui, se necessário.
             console.log('Login bem-sucedido:', response.data);
+            login(response.data.idUsuario);
+            sessionStorage.setItem('tipoUsuario', String(response.data.tipoUsuario));
 
             // Navega para a página principal da aplicação após um login bem-sucedido.
             navigate('/processos');

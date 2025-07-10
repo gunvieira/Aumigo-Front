@@ -12,7 +12,7 @@ interface Pet {
     especie: "Cachorro" | "Gato";
     tidade: string;
     porte: string;
-    imagem: string;
+    midiaImagem: string;
 }
 
 type Filtros = {
@@ -42,7 +42,7 @@ export function ListaDePets() {
 
     // Este useEffect para buscar os dados iniciais continua o mesmo.
     useEffect(() => {
-        axios.get<Pet[]>("/pets.json")
+        axios.get<Pet[]>("http://localhost:8080/animais")
             .then((response) => {
                 setPets(response.data);
             })
@@ -91,7 +91,7 @@ export function ListaDePets() {
                     <Link to={`/pet/${pet.id}`} key={pet.id} className="no-underline">
                         <PetCard
                             nome={pet.nome}
-                            imagem={pet.imagem}
+                            imagem={pet.midiaImagem}
                             tidade={pet.tidade}
                             porte={pet.porte}
                             sexo={pet.sexo}
