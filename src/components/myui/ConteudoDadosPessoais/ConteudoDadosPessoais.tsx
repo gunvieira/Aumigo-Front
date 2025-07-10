@@ -49,13 +49,9 @@ export default function ConteudoDadosPessoais() {
     };
 
     useEffect(() => {
-        // 1. Primeiro, pegamos o ID do sessionStorage e guardamos em uma variável.
-        const usuarioId = sessionStorage.getItem('id');
 
-        // 2. É FUNDAMENTAL verificar se o ID realmente existe.
+        const usuarioId = sessionStorage.getItem('id');
         if (usuarioId) {
-            // 3. Usamos Template Literals (crase ``) para montar a URL dinâmica.
-            //    Note o `${usuarioId}` e o parêntese fechando o get() antes do .then
             axios.get<dadosUsuario>(`http://localhost:8080/users/${usuarioId}`)
                 .then((response) => {
                     setDados(response.data);
@@ -68,14 +64,14 @@ export default function ConteudoDadosPessoais() {
             console.error("ID do usuário não encontrado na sessão.");
             setErro("Sessão inválida. Por favor, faça o login novamente.");
         }
-    }, []); // O array de dependências vazio [] garante que este código rode apenas uma vez,
-    // quando o componente é montado na tela.
+    }, []);
+
 
     const [podeCadastrar, setPodeCadastrar] = useState<boolean>(false);
 
     useEffect(() => {
         const tipoUsuario: string | null = sessionStorage.getItem('tipoUsuario');
-        if (tipoUsuario !== '1') {
+        if (tipoUsuario !== '0') {
             setPodeCadastrar(true);
         }
     }, []);
@@ -108,7 +104,6 @@ export default function ConteudoDadosPessoais() {
 
                         {dados && (
                             <Fragment>
-                                {/* MODIFICAÇÃO 2: Usando a função de formatação */}
                                 <CampoDeDados label="Nome" value={formatarNomeProprio(dados.nome)} />
                                 <CampoDeDados label="Email" value={dados.email} />
                                 <CampoDeDados label="CPF" value={dados.cpf} />

@@ -5,11 +5,10 @@ import axios from 'axios';
 import { FiPlus } from "react-icons/fi";
 
 export default function CadastrarAnimal() {
-    // --- CONSTANTES DE VALIDAÇÃO ---
+
     const MAX_FILE_SIZE_MB = 5;
     const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
-    // --- ESTADOS DO COMPONENTE ---
     const [formData, setFormData] = useState({
         nome: '',
         dataNasc: '',
@@ -170,13 +169,19 @@ export default function CadastrarAnimal() {
             const [dia, mes, ano] = formData.dataNasc.split('/');
             const dataFormatada = `${ano}-${mes}-${dia}`;
 
-            const dataToSubmit = {
+            const animalData = {
                 ...formData,
-                dataNasc: dataFormatada, // Usa a data formatada
-                midiaImagem,
-                idUsuario: idUsuario,
+                dataNasc: dataFormatada,
+                midiaImagem: midiaImagem,
                 status: status
             };
+
+            // 2. Crie o objeto final para envio, com a estrutura aninhada correta.
+            const dataToSubmit = {
+                animal: animalData,
+                idUsuario: idUsuario
+            };
+
 
             console.log('Dados a serem enviados para o servidor:', dataToSubmit);
             const response = await axios.post('http://localhost:8080/animais', dataToSubmit);

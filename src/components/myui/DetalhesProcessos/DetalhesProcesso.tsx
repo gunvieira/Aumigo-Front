@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { ReactNode, useState } from "react";
 
-import axios from 'axios';
+// import axios from 'axios';
 import BotaoEntrar from "../BotaoPadrao/Botao";
 
 // Interface do Processo
@@ -55,9 +55,8 @@ export default function DetalhesProcesso({ children, processo, onUpdate }: Detal
         }
     };
 
-    // Função para renderizar os botões de ação ou a mensagem de status finalizado
     const renderActionFooter = () => {
-        // 2. Verificamos se o status é 'PENDENTE' para exibir os botões
+
         if (processo.status === 'PENDENTE') {
             return (
                 <div className="flex flex-row justify-center gap-5 mt-6">
@@ -85,7 +84,6 @@ export default function DetalhesProcesso({ children, processo, onUpdate }: Detal
             );
         }
 
-        // Caso o status não seja 'PENDENTE', exibimos uma mensagem
         return (
             <div className="mt-6 text-center">
                 <p className="text-gray-600 font-medium bg-gray-100 p-3 rounded-md">

@@ -60,7 +60,7 @@ const ConteudoProcessos: React.FC = () => {
 
             // Substitua '/api/processos' pelo endpoint real da sua API.
             // O Axios já converte a resposta JSON automaticamente.
-            const response = await axios.get<IProcesso[]>('/processos.json');
+            const response = await axios.get<IProcesso[]>('http://localhost:8080/adocoes');
             setProcessos(Array.isArray(response.data) ? response.data : []);
         } catch (error) {
             console.error("Erro ao buscar os processos com Axios:", error);
@@ -73,7 +73,7 @@ const ConteudoProcessos: React.FC = () => {
     // O useEffect agora chama a nova função fetchProcessos
     useEffect(() => {
         const tipoUsuario: string | null = sessionStorage.getItem('tipoUsuario');
-        if (tipoUsuario !== '1') {
+        if (tipoUsuario !== '0') {
             setPodeCadastrar(true);
         }
         fetchProcessos();
@@ -130,11 +130,8 @@ const ConteudoProcessos: React.FC = () => {
                                     </span>
                             </td>
                             <td className="p-4">
-                                {/*
-                                  - Passamos o objeto 'processo' inteiro para o modal.
-                                  - Passamos a função 'fetchProcessos' como callback 'onUpdate'
-                                    para que o modal possa recarregar a lista após uma ação.
-                                */}
+
+
                                 <DetalhesProcesso processo={processo} onUpdate={fetchProcessos}>
                                     <button
                                         className="border border-emerald-400 text-emerald-400 rounded px-3 py-1 hover:bg-[#E6F6F3] transition">

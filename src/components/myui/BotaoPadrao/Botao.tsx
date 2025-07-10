@@ -143,7 +143,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     className?: string;
     variant?: 'primary' | 'secondary';
     icon?: React.ReactNode;
-    isLoading?: boolean; // <-- NOVA PROP
+    isLoading?: boolean;
 }
 
 const BotaoEntrar: React.FC<ButtonProps> = ({
@@ -152,7 +152,7 @@ const BotaoEntrar: React.FC<ButtonProps> = ({
                                                 className = '',
                                                 variant = 'primary',
                                                 icon,
-                                                isLoading = false, // <-- NOVA PROP com valor padrão 'false'
+                                                isLoading = false,
                                                 ...rest
                                             }) => {
     const baseClasses = "px-4 py-2 rounded-md transition text-white font-medium flex items-center justify-center gap-2";

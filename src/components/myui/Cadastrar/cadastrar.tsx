@@ -16,7 +16,7 @@ export default function TelaCadastro() {
         senha: '',
         telefone: '',
         cpf: '',
-        tipoUsuario: 1,
+        tipoUsuario: 0,
         endereco: {
             logradouro: '',
             bairro: '',
@@ -166,12 +166,13 @@ export default function TelaCadastro() {
 
 
         try {
+            console.log('Dados de envio:', formData);
             const response = await axios.post('http://localhost:8080/users', formData);
             alert('Cadastro realizado com sucesso! ✅');
             console.log('Dados da resposta:', response.data);
             login(response.data.idUsuario);
             sessionStorage.setItem('tipoUsuario', String(response.data.tipoUsuario));
-            navigate('/dadospessoais')
+           // navigate('/dadospessoais')
 
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {

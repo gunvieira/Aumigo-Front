@@ -5,12 +5,24 @@ import { FiltroPets } from "@/components/myui/FiltroPets/FiltroPets";
 import { PetCard } from "@/components/myui/Cardpets/Cardpets";
 import { LoaderCircle } from "lucide-react";
 
-interface Pet {
-    id: number;
+// Interface para os dados recebidos da API
+interface PetDaApi {
+    idAnimal: number;
     nome: string;
     sexo: "Macho" | "Fêmea";
     especie: "Cachorro" | "Gato";
-    tidade: string;
+    dataNasc: string; // Recebemos a data de nascimento da API
+    porte: string;
+    midiaImagem: string;
+}
+
+// Interface para os dados usados no componente (com a idade já calculada)
+interface Pet {
+    idAnimal: number;
+    nome: string;
+    sexo: "Macho" | "Fêmea";
+    especie: "Cachorro" | "Gato";
+    tidade: string; // Agora representa "Filhote", "Adulto" ou "Senior"
     porte: string;
     midiaImagem: string;
 }
@@ -20,17 +32,34 @@ type Filtros = {
     especie: "Todos" | "Cachorro" | "Gato";
 };
 
+// Função para calcular a categoria de idade baseada na data de nascimento
+function calcularCategoriaIdade(dataNasc: string): string {
+    const dataNascimento = new Date(dataNasc);
+    const dataAtual = new Date();
+
+    let idade = dataAtual.getFullYear() - dataNascimento.getFullYear();
+    const m = dataAtual.getMonth() - dataNascimento.getMonth();
+
+    if (m < 0 || (m === 0 && dataAtual.getDate() < dataNascimento.getDate())) {
+        idade--;
+    }
+
+    if (idade < 2) {
+        return "Filhote";
+    } else if (idade <= 10) {
+        return "Adulto";
+    } else {
+        return "Senior";
+    }
+}
+
+
 export function ListaDePets() {
-    // O hook já estava aqui, agora vamos usá-lo completamente.
     const [searchParams, setSearchParams] = useSearchParams();
 
-    // --- MODIFICAÇÃO 1: Definir o estado inicial a partir da URL ---
-    // Lemos os parâmetros 'especie' e 'sexo' da URL.
-    // Se não existirem, usamos 'Todos' como valor padrão.
     const especieInicial = (searchParams.get("especie") || "Todos") as Filtros['especie'];
     const sexoInicial = (searchParams.get("sexo") || "Todos") as Filtros['sexo'];
 
-    // O estado agora começa com os valores da URL.
     const [filtros, setFiltros] = useState<Filtros>({
         sexo: sexoInicial,
         especie: especieInicial
@@ -40,17 +69,21 @@ export function ListaDePets() {
     const [petsFiltrados, setPetsFiltrados] = useState<Pet[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // Este useEffect para buscar os dados iniciais continua o mesmo.
     useEffect(() => {
-        axios.get<Pet[]>("http://localhost:8080/animais")
+        axios.get<PetDaApi[]>("http://localhost:8080/animais")
             .then((response) => {
-                setPets(response.data);
+                // Mapeia os dados da API para o formato que o componente utiliza
+                const petsProcessados = response.data.map(petDaApi => ({
+                    ...petDaApi,
+                    // Converte dataNasc para a categoria de idade (tidade)
+                    tidade: calcularCategoriaIdade(petDaApi.dataNasc)
+                }));
+                setPets(petsProcessados);
             })
             .catch(error => console.error("Erro ao buscar a lista de pets:", error))
             .finally(() => setLoading(false));
     }, []);
 
-    // --- MODIFICAÇÃO 2: Sincronizar o estado do filtro COM a URL ---
     useEffect(() => {
         const resultado = pets.filter((pet) => {
             const sexoOk = filtros.sexo === "Todos" || pet.sexo === filtros.sexo;
@@ -59,19 +92,18 @@ export function ListaDePets() {
         });
         setPetsFiltrados(resultado);
 
-        //  Lógica para atualizar a URL sempre que os filtros mudarem
         const params = new URLSearchParams();
-        // Só adiciona o parâmetro na URL se ele for diferente de "Todos"
+
         if (filtros.especie !== "Todos") {
             params.set("especie", filtros.especie);
         }
         if (filtros.sexo !== "Todos") {
             params.set("sexo", filtros.sexo);
         }
-        // Atualiza a URL sem recarregar a página e sem poluir o histórico
+
         setSearchParams(params, { replace: true });
 
-    }, [filtros, pets, setSearchParams]); // Adiciona setSearchParams à lista de dependências
+    }, [filtros, pets, setSearchParams]);
 
     if (loading) {
         return <div className="flex h-screen items-center justify-center"><LoaderCircle className="h-12 w-12 animate-spin text-primary" /></div>;
@@ -88,7 +120,7 @@ export function ListaDePets() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {petsFiltrados.map((pet) => (
-                    <Link to={`/pet/${pet.id}`} key={pet.id} className="no-underline">
+                    <Link to={`/pet/${pet.idAnimal}`} key={pet.idAnimal} className="no-underline">
                         <PetCard
                             nome={pet.nome}
                             imagem={pet.midiaImagem}
