@@ -3,6 +3,8 @@ import MyInput from "@/components/myui/Input/Input.tsx";
 import React, { useState } from "react";
 import axios from 'axios';
 import { FiPlus } from "react-icons/fi";
+import {useAuth} from "@/context/AuthContext.tsx";
+import {useNavigate} from "react-router-dom";
 
 export default function CadastrarAnimal() {
 
@@ -26,12 +28,12 @@ export default function CadastrarAnimal() {
         sexo: '',
         foto: '',
     });
-
+    const { logout } = useAuth();
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
-
+    const navigate = useNavigate();
     // --- FUNÇÕES ---
 
     // Função para validar o formulário
@@ -122,6 +124,10 @@ export default function CadastrarAnimal() {
         setPreviewUrl(URL.createObjectURL(file));
     };
 
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
     // Função para lidar com a submissão do formulário
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -214,7 +220,7 @@ export default function CadastrarAnimal() {
                         <Botao to="/dadospessoais" tsize="text-[18px]" customClasses="w-40">Dados Pessoais</Botao>
                         <Botao to="/processos" tsize="text-[18px]" customClasses="w-40">Processos</Botao>
                         <Botao to="#" tsize="text-[18px]" customClasses="w-40">Cadastrar animal</Botao>
-                        <Botao to="/" tsize="text-[18px]" customClasses="w-40">Sair</Botao>
+                        <Botao onClick={handleLogout} tsize="text-[18px]" customClasses="w-40">Sair</Botao>
                     </nav>
                 </aside>
 

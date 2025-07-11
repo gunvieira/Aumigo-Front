@@ -1,45 +1,20 @@
+// src/components/ConteudoProcessos.tsx
+
 import { Botao } from "@/components/myui/BotaoPadrao/Botao.tsx";
 import DetalhesProcesso from "@/components/myui/DetalhesProcessos/DetalhesProcesso.tsx";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext.tsx";
-import axios from 'axios'; // Importa o Axios
+import axios from 'axios';
 import { LoaderCircle, FileX2 } from "lucide-react";
+import {IProcesso} from "@/context/Processo.ts";
 
-// A interface para o processo de adoção permanece a mesma
-interface IProcesso {
-    id_adocao: number;
-    data_solicitacao: string;
-    status: string;
-    animal: {
-        id_animal: number;
-        nome: string;
-        imagem: string;
-        porte: string;
-        sexo: string;
-        raca: {
-            nome_raca: string;
-            especie: {
-                nome_especie: string;
-            }
-        }
-    };
-    usuario: {
-        id_usuario: number;
-        nome: string;
-        email: string;
-        telefone: string;
-        // Adicione o campo cidade se ele vier da API
-        // cidade: string;
-    };
-}
 
 const statusColors: { [key: string]: string } = {
     PENDENTE: 'bg-yellow-400',
     APROVADO: 'bg-green-500',
     RECUSADO: 'bg-red-500',
 };
-
 
 const ConteudoProcessos: React.FC = () => {
     const { logout } = useAuth();
@@ -53,24 +28,23 @@ const ConteudoProcessos: React.FC = () => {
         navigate('/');
     };
 
-    // Função para buscar os processos da API usando Axios
     const fetchProcessos = async () => {
-        setLoading(true);
+        // Não reseta o loading aqui para evitar piscar a tela na atualização
+        // setLoading(true);
         try {
-
-            // Substitua '/api/processos' pelo endpoint real da sua API.
-            // O Axios já converte a resposta JSON automaticamente.
-            const response = await axios.get<IProcesso[]>('http://localhost:8080/adocoes');
+            const usuarioId = sessionStorage.getItem('id');
+            const response = await axios.get<IProcesso[]>(`http://localhost:8080/adocoes/${usuarioId}`);
+            // Garante que a resposta seja sempre um array
             setProcessos(Array.isArray(response.data) ? response.data : []);
+            console.log("Dados recebidos:", response.data);
         } catch (error) {
             console.error("Erro ao buscar os processos com Axios:", error);
-            setProcessos([]); // Garante que o estado seja um array vazio em caso de erro
+            setProcessos([]);
         } finally {
-            setLoading(false);
+            setLoading(false); // Garante que o loading termine mesmo em caso de erro
         }
     };
 
-    // O useEffect agora chama a nova função fetchProcessos
     useEffect(() => {
         const tipoUsuario: string | null = sessionStorage.getItem('tipoUsuario');
         if (tipoUsuario !== '0') {
@@ -93,7 +67,6 @@ const ConteudoProcessos: React.FC = () => {
                 <div className="flex flex-col items-center justify-center text-center text-gray-500 mt-10">
                     <FileX2 className="h-16 w-16 mb-4" />
                     <h3 className="text-lg font-semibold">Nenhum processo de adoção encontrado.</h3>
-                    <p>Você ainda não iniciou nenhum processo.</p>
                 </div>
             );
         }
@@ -106,38 +79,43 @@ const ConteudoProcessos: React.FC = () => {
                         <th className="p-4">Animal</th>
                         <th className="p-4">Data do Pedido</th>
                         <th className="p-4">Status</th>
-                        <th className="p-4">Ações</th>
+                        {podeCadastrar && (
+                            <th className="p-4">Ações</th>
+                        )}
+
                     </tr>
                     </thead>
                     <tbody>
                     {processos.map((processo) => (
-                        <tr key={processo.id_adocao} className="border-b border-gray-100 hover:bg-gray-50">
+                        <tr key={processo.idAdocao} className="border-b border-gray-100 hover:bg-gray-50">
                             <td className="p-4 flex items-center gap-2">
                                 <img
-                                    src={processo.animal?.imagem || '/caminho/para/imagem/padrao.png'}
+                                    src={processo.animal?.midiaImagem || '/imagem-placeholder.png'}
                                     alt={processo.animal?.nome || 'Animal'}
                                     className="w-8 h-8 rounded-full object-cover"
                                 />
-                                {processo.animal?.nome}
+                                {processo.animal?.nome || 'Nome Indisponível'}
                             </td>
                             <td className="p-4">
-                                {new Date(processo.data_solicitacao).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
+                                {new Date(processo.dataAdocao).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
                             </td>
                             <td className="p-4">
-                                    <span className="flex items-center gap-2">
-                                        <span className={`w-2 h-2 ${statusColors[processo.status]} rounded-full`}></span>
-                                        {processo.status}
-                                    </span>
+                                <span className="flex items-center gap-2">
+                                    <span className={`w-2 h-2 ${statusColors[processo.status]} rounded-full`}></span>
+                                    {processo.status}
+                                </span>
                             </td>
                             <td className="p-4">
+                                {podeCadastrar && (
+                                    <DetalhesProcesso processo={processo} onUpdate={fetchProcessos}>
+                                        <button
+                                            className="border border-emerald-400 text-emerald-400 rounded px-3 py-1 hover:bg-[#E6F6F3] transition">
+                                            Ver detalhes
+                                        </button>
+                                    </DetalhesProcesso>
 
+                                )}
 
-                                <DetalhesProcesso processo={processo} onUpdate={fetchProcessos}>
-                                    <button
-                                        className="border border-emerald-400 text-emerald-400 rounded px-3 py-1 hover:bg-[#E6F6F3] transition">
-                                        Ver detalhes
-                                    </button>
-                                </DetalhesProcesso>
                             </td>
                         </tr>
                     ))}
@@ -167,7 +145,6 @@ const ConteudoProcessos: React.FC = () => {
                         <Botao onClick={handleLogout} tsize="text-[18px]" customClasses="w-40">Sair</Botao>
                     </nav>
                 </aside>
-
                 <main className="flex-1 p-10">
                     <h1 className="text-xl font-semibold mb-6">Meus processos de adoção</h1>
                     {renderMainContent()}
