@@ -1,9 +1,7 @@
-// src/interfaces/Processo.ts
-
 export interface IProcesso {
     idAdocao: number;
     dataAdocao: string;
-    statusAdocao: 'PENDENTE' | 'APROVADO' | 'RECUSADO' | 'CADASTRADO';
+
     animal: {
         idAnimal: number;
         nome: string;
@@ -12,11 +10,13 @@ export interface IProcesso {
         sexo: string;
         raca: string
         especie: string;
-    } | null; // Permite que 'animal' seja nulo
+        status: 'PENDENTE' | 'APROVADO' | 'CADASTRADO';
+    } | null;
     usuario: {
         id_usuario: number;
         nome: string;
         email: string;
+        endereco: {cidade: string} | null;
         telefone: string;
-    } | null; // Permite que 'usuario' seja nulo
+    } | null;
 }

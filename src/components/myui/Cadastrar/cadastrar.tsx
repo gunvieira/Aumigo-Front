@@ -4,6 +4,7 @@ import axios from 'axios';
 import MyInput from "@/components/myui/Input/Input.tsx";
 import BotaoEntrar from "@/components/myui/BotaoPadrao/Botao.tsx";
 import {useAuth} from "@/context/AuthContext.tsx";
+import api from "@/services/api.ts";
 
 export default function TelaCadastro() {
     const navigate = useNavigate();
@@ -49,7 +50,6 @@ export default function TelaCadastro() {
         const { name, value } = e.target;
         const keys = name.split('.');
 
-        // Limpa o erro do campo específico ao ser alterado
         if (keys.length === 1) {
             setErrors(prev => ({ ...prev, [keys[0]]: '' }));
         } else {
@@ -59,7 +59,6 @@ export default function TelaCadastro() {
             }));
         }
 
-        // Atualiza o estado do formulário
         if (keys.length === 1) {
             const key = keys[0] as keyof typeof formData;
             if (key !== 'endereco') {
@@ -83,7 +82,6 @@ export default function TelaCadastro() {
         }
     };
 
-    // 2. Função de validação
     const validateForm = () => {
         const tempErrors = {
             nome: '',
@@ -101,7 +99,7 @@ export default function TelaCadastro() {
         };
         let isValid = true;
 
-        // Validação dos dados pessoais
+
         if (!formData.nome.trim()) {
             tempErrors.nome = 'O campo Nome é obrigatório.';
             isValid = false;
@@ -122,7 +120,7 @@ export default function TelaCadastro() {
             isValid = false;
         }
 
-        // Validação do endereço
+
         if (!formData.endereco.cep.trim()) {
             tempErrors.endereco.cep = 'O campo CEP é obrigatório.';
             isValid = false;
@@ -156,23 +154,22 @@ export default function TelaCadastro() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // 3. Executa a validação antes de enviar
+
         if (!validateForm()) {
             console.log("Validação falhou. Formulário não enviado.");
-            return; // Interrompe o envio se houver erros
+            return;
         }
 
         setIsLoading(true);
 
 
         try {
-            console.log('Dados de envio:', formData);
-            const response = await axios.post('http://localhost:8080/users', formData);
+            const response = await api.post('/users', formData);
             alert('Cadastro realizado com sucesso! ✅');
             console.log('Dados da resposta:', response.data);
             login(response.data.idUsuario);
             sessionStorage.setItem('tipoUsuario', String(response.data.tipoUsuario));
-           // navigate('/dadospessoais')
+            navigate('/dadospessoais')
 
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
@@ -193,7 +190,6 @@ export default function TelaCadastro() {
                 <h1 className="text-3xl font-bold mb-8 text-emerald-700 text-center">Cadastre-se</h1>
                 <form onSubmit={handleSubmit} noValidate>
                     <div className="flex flex-col md:flex-row md:gap-8">
-                        {/* --- COLUNA 1: DADOS PESSOAIS --- */}
                         <div className="w-full md:w-1/2">
                             <MyInput
                                 id="nome"
@@ -204,7 +200,7 @@ export default function TelaCadastro() {
                                 value={formData.nome}
                                 onChange={handleChange}
                                 error={errors.nome}
-                                validationType="letters"
+
                             />
                             <MyInput
                                 id="cpf"
@@ -251,11 +247,9 @@ export default function TelaCadastro() {
                             />
                         </div>
 
-                        {/* --- LINHA DIVISÓRIA --- */}
                         <div className="hidden md:block border-l border-gray-200 mx-4"></div>
                         <hr className="my-6 border-gray-200 md:hidden" />
 
-                        {/* --- COLUNA 2: ENDEREÇO --- */}
                         <div className="w-full md:w-1/2">
                             <MyInput
                                 id="endereco.cep"
@@ -326,7 +320,7 @@ export default function TelaCadastro() {
                                         value={formData.endereco.cidade}
                                         onChange={handleChange}
                                         error={errors.endereco.cidade}
-                                        validationType="letters"
+
                                     />
                                 </div>
                                 <div className="w-full sm:w-1/3">

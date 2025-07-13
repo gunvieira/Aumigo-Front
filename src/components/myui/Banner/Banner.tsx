@@ -1,7 +1,6 @@
 import {Botao} from "@/components/myui/BotaoPadrao/Botao.tsx";
 
 export default function Banner() {
-    /* Renomear e trazer tudo para ca*/
     return (
         <section className="gap-3 bg-radial from-teal-300/50 from-50% to-teal-300/10 p-5">
 

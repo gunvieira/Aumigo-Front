@@ -6,6 +6,7 @@ import { ArrowLeft, LoaderCircle, AlertTriangle, CheckCircle } from "lucide-reac
 import Header from "@/components/myui/Header/Header.tsx";
 import Footer from "@/components/myui/Footer/Footer.tsx";
 import BotaoEntrar from "@/components/myui/BotaoPadrao/Botao";
+import api from "@/services/api.ts";
 
 interface Pet {
     idAnimal: number;
@@ -54,7 +55,7 @@ export function PaginaDetalhesPet() {
             setLoading(true);
             setError(null);
             try {
-                const response = await axios.get<Pet>(`http://localhost:8080/animais/${petId}`);
+                const response = await api.get<Pet>(`/animais/${petId}`);
                 setPet(response.data);
                 setIdade(calcularIdade(response.data.dataNasc));
             } catch (err) {
@@ -80,7 +81,7 @@ export function PaginaDetalhesPet() {
         const usuario: Usuario = JSON.parse(usuarioJson);
         const adoptionPayload = {
             dataAdocao: new Date().toISOString().split('T')[0],
-            statusAdocao: "PENDENTE",
+            status: "PENDENTE",
             idUsuario: usuario,
             idAnimal: pet.idAnimal,
         };
@@ -90,7 +91,7 @@ export function PaginaDetalhesPet() {
         setAdoptionSuccess(false);
         try {
             console.log(adoptionPayload)
-            await axios.post('http://localhost:8080/adocoes', adoptionPayload);
+            await api.post('/adocoes', adoptionPayload);
             setAdoptionSuccess(true);
         } catch (err) {
             setAdoptionError("Ocorreu um erro ao processar seu pedido.");
@@ -132,17 +133,14 @@ export function PaginaDetalhesPet() {
                                     <p><strong>Porte:</strong> {pet.porte}</p>
                                 </CardContent>
                                 <CardFooter className="flex-col items-start gap-4">
-                                    {/* 2. O antigo <Botao> foi substituído pelo <BotaoEntrar> */}
                                     <BotaoEntrar
                                         onClick={handleAdocao}
-                                        isLoading={isAdopting} // A prop 'isLoading' controla o spinner
-                                        disabled={adoptionSuccess} // Continua desabilitado após o sucesso
-                                        className="w-80 h-12 text-[24px]" // Classes customizadas
+                                        isLoading={isAdopting}
+                                        disabled={adoptionSuccess}
+                                        className="w-80 h-12 text-[24px]"
                                     >
                                         Quero Adotar!
                                     </BotaoEntrar>
-
-                                    {/* Mensagens de Feedback */}
                                     {adoptionSuccess && (
                                         <div className="flex items-center text-green-600 font-semibold">
                                             <CheckCircle className="mr-2 h-5 w-5" />

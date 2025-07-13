@@ -1,28 +1,27 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import axios from "axios";
 import { FiltroPets } from "@/components/myui/FiltroPets/FiltroPets";
 import { PetCard } from "@/components/myui/Cardpets/Cardpets";
 import { LoaderCircle } from "lucide-react";
+import api from "@/services/api.ts";
 
-// Interface para os dados recebidos da API
 interface PetDaApi {
     idAnimal: number;
     nome: string;
     sexo: "Macho" | "Fêmea";
     especie: "Cachorro" | "Gato";
-    dataNasc: string; // Recebemos a data de nascimento da API
+    dataNasc: string;
     porte: string;
     midiaImagem: string;
+    status: string;
 }
 
-// Interface para os dados usados no componente (com a idade já calculada)
 interface Pet {
     idAnimal: number;
     nome: string;
     sexo: "Macho" | "Fêmea";
     especie: "Cachorro" | "Gato";
-    tidade: string; // Agora representa "Filhote", "Adulto" ou "Senior"
+    tidade: string;
     porte: string;
     midiaImagem: string;
 }
@@ -32,7 +31,6 @@ type Filtros = {
     especie: "Todos" | "Cachorro" | "Gato";
 };
 
-// Função para calcular a categoria de idade baseada na data de nascimento
 function calcularCategoriaIdade(dataNasc: string): string {
     const dataNascimento = new Date(dataNasc);
     const dataAtual = new Date();
@@ -70,12 +68,12 @@ export function ListaDePets() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get<PetDaApi[]>("http://localhost:8080/animais")
+        api.get<PetDaApi[]>("/animais")
             .then((response) => {
-                // Mapeia os dados da API para o formato que o componente utiliza
-                const petsProcessados = response.data.map(petDaApi => ({
-                    ...petDaApi,
-                    // Converte dataNasc para a categoria de idade (tidade)
+                const petsProcessados = response.data
+                    .filter(petDaApi => petDaApi.status === "CADASTRADO")
+                    .map(petDaApi => ({
+                        ...petDaApi,
                     tidade: calcularCategoriaIdade(petDaApi.dataNasc)
                 }));
                 setPets(petsProcessados);
@@ -100,7 +98,6 @@ export function ListaDePets() {
         if (filtros.sexo !== "Todos") {
             params.set("sexo", filtros.sexo);
         }
-
         setSearchParams(params, { replace: true });
 
     }, [filtros, pets, setSearchParams]);
@@ -108,16 +105,13 @@ export function ListaDePets() {
     if (loading) {
         return <div className="flex h-screen items-center justify-center"><LoaderCircle className="h-12 w-12 animate-spin text-primary" /></div>;
     }
-
     return (
         <div className="container mx-auto p-4 md:p-8 space-y-8">
             <div>
                 <h1 className="text-4xl font-bold text-center">Encontre seu novo amigo</h1>
                 <p className="text-center text-muted-foreground mt-2">Filtre para encontrar o pet ideal para você</p>
             </div>
-
             <FiltroPets filtrosAtuais={filtros} onChange={setFiltros} />
-
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {petsFiltrados.map((pet) => (
                     <Link to={`/pet/${pet.idAnimal}`} key={pet.idAnimal} className="no-underline">

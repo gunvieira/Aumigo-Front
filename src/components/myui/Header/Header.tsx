@@ -4,11 +4,8 @@ import Logo from "@/components/myui/Logo/Logo.tsx";
 import { FaUserCircle } from "react-icons/fa";
 import {useAuth} from "@/context/AuthContext.tsx";
 import {Link} from "react-router";
-
-
 export default function Header() {
     const {isLoggedIn} = useAuth();
-
     return (
         <div className="shadow-sm/5 ">
         <header className="flex flex-col my-0 w-full max-w-screen-xl mx-auto px-4 pt-1 ">

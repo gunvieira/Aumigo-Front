@@ -7,14 +7,13 @@ interface BotaoGhostProps {
     to: string;
 }
 
-// 1. Defina as props corretamente em uma interface
 interface BotaoProps {
     children?: string;
     to?: string; // 'to' agora é opcional
     tsize?: string;
     growOnHover?: boolean;
     customClasses?: string;
-    onClick?: () => void; // 'onClick' é opcional e é uma função que não retorna nada
+    onClick?: () => void;
 }
 
 export function Botao(props: BotaoProps) {
@@ -29,14 +28,12 @@ export function Botao(props: BotaoProps) {
 
     const textoinserido = children ?? "Botão";
 
-    // Classes de estilo que serão usadas em ambos os casos
     const buttonClassName = `bg-emerald-400 hover:bg-emerald-500 font-dosis cursor-pointer text-white 
         ${tsize ?? ""} 
         ${growOnHover ? "transition-transform duration-500 hover:scale-110 ease-in-out" : ""}
         ${customClasses ?? ""}
     `;
 
-    // 2. Lógica condicional: Se 'to' existir, renderiza um Link. Senão, um botão normal.
     if (to) {
         return (
             <Link to={to} onClick={onClick}>
@@ -131,12 +128,6 @@ export function FiltroBotao({ isActive, onClick, children }: FiltroBotaoProps) {
     );
 }
 
-
-
-
-
-
-// 1. Adicionamos a nova prop opcional 'isLoading'
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children: React.ReactNode;
     to?: string;
@@ -158,14 +149,12 @@ const BotaoEntrar: React.FC<ButtonProps> = ({
     const baseClasses = "px-4 py-2 rounded-md transition text-white font-medium flex items-center justify-center gap-2";
     const variantClasses = {
         primary: "bg-emerald-400 hover:bg-emerald-500",
-        secondary: "bg-gray-500 hover:bg-gray-600",
+        secondary: "bg-teal-700 hover:bg-teal-800",
     };
 
-    // 2. Adicionamos classes condicionais para o estado de loading
     const loadingClasses = isLoading ? 'opacity-75 cursor-not-allowed' : '';
     const combinedClasses = `${baseClasses} ${variantClasses[variant]} ${loadingClasses} ${className}`;
 
-    // Componente Spinner para ser usado durante o loading
     const Spinner = () => (
         <div
             className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"
@@ -178,7 +167,6 @@ const BotaoEntrar: React.FC<ButtonProps> = ({
 
     const content = (
         <>
-            {/* 3. O conteúdo do botão agora é condicional */}
             {isLoading ? <Spinner /> : (
                 <>
                     {children}
@@ -188,7 +176,7 @@ const BotaoEntrar: React.FC<ButtonProps> = ({
         </>
     );
 
-    if (to && !isLoading) { // Links de navegação não devem ter estado de loading
+    if (to && !isLoading) {
         return (
             <Link to={to} className={combinedClasses}>
                 {content}
@@ -200,7 +188,6 @@ const BotaoEntrar: React.FC<ButtonProps> = ({
         <Button
             size="lg"
             className={combinedClasses}
-            // 4. O botão fica desabilitado se estiver carregando ou se a prop 'disabled' for passada
             disabled={isLoading || rest.disabled}
             {...rest}
         >

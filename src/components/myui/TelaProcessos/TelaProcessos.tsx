@@ -1,21 +1,16 @@
-// src/components/ConteudoProcessos.tsx
-
-import { Botao } from "@/components/myui/BotaoPadrao/Botao.tsx";
+import {Botao, BotaoAdote} from "@/components/myui/BotaoPadrao/Botao.tsx";
 import DetalhesProcesso from "@/components/myui/DetalhesProcessos/DetalhesProcesso.tsx";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext.tsx";
-import axios from 'axios';
 import { LoaderCircle, FileX2 } from "lucide-react";
 import {IProcesso} from "@/context/Processo.ts";
-
+import api from "@/services/api.ts";
 
 const statusColors: { [key: string]: string } = {
     PENDENTE: 'bg-yellow-400',
     APROVADO: 'bg-green-500',
-    RECUSADO: 'bg-red-500',
 };
-
 const ConteudoProcessos: React.FC = () => {
     const { logout } = useAuth();
     const [podeCadastrar, setPodeCadastrar] = useState<boolean>(false);
@@ -29,19 +24,17 @@ const ConteudoProcessos: React.FC = () => {
     };
 
     const fetchProcessos = async () => {
-        // Não reseta o loading aqui para evitar piscar a tela na atualização
-        // setLoading(true);
         try {
             const usuarioId = sessionStorage.getItem('id');
-            const response = await axios.get<IProcesso[]>(`http://localhost:8080/adocoes/${usuarioId}`);
-            // Garante que a resposta seja sempre um array
+            const response = await api.get<IProcesso[]>(`/adocoes/${usuarioId}`);
+
             setProcessos(Array.isArray(response.data) ? response.data : []);
             console.log("Dados recebidos:", response.data);
         } catch (error) {
             console.error("Erro ao buscar os processos com Axios:", error);
             setProcessos([]);
         } finally {
-            setLoading(false); // Garante que o loading termine mesmo em caso de erro
+            setLoading(false);
         }
     };
 
@@ -64,9 +57,12 @@ const ConteudoProcessos: React.FC = () => {
 
         if (processos.length === 0) {
             return (
-                <div className="flex flex-col items-center justify-center text-center text-gray-500 mt-10">
+                <div className="flex flex-col items-center justify-center text-center text-gray-500 mt-10 gap-10">
+                    <div className="flex flex-col items-center justify-center text-center text-gray-500 mt-10">
                     <FileX2 className="h-16 w-16 mb-4" />
                     <h3 className="text-lg font-semibold">Nenhum processo de adoção encontrado.</h3>
+                    </div>
+                    <BotaoAdote to="/adote" tsize="text-[25px]" growOnHover>Adote!</BotaoAdote>
                 </div>
             );
         }
@@ -101,8 +97,8 @@ const ConteudoProcessos: React.FC = () => {
                             </td>
                             <td className="p-4">
                                 <span className="flex items-center gap-2">
-                                    <span className={`w-2 h-2 ${statusColors[processo.status]} rounded-full`}></span>
-                                    {processo.status}
+                                    <span className={`w-2 h-2 ${statusColors[processo.animal?.status ?? 'undefined']} rounded-full`}></span>
+                                    {processo.animal?.status}
                                 </span>
                             </td>
                             <td className="p-4">

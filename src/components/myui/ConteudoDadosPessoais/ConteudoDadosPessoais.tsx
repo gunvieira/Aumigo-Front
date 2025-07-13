@@ -1,13 +1,10 @@
 import { Botao } from "@/components/myui/BotaoPadrao/Botao.tsx";
 import CampoDeDados from "../CampoDeDados/CampoDeDados";
 import { useEffect, useState, Fragment } from "react";
-import axios from "axios";
 import {useAuth} from "@/context/AuthContext.tsx";
 import {useNavigate} from "react-router-dom";
+import api from "@/services/api.ts";
 
-
-
-// As interfaces permanecem as mesmas
 interface Endereco {
     logradouro: string;
     bairro: string;
@@ -32,12 +29,10 @@ export default function ConteudoDadosPessoais() {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        logout(); // Chama a função de logout do contexto
-        navigate('/'); // Redireciona para a página de login
+        logout();
+        navigate('/');
     };
 
-
-    // MODIFICAÇÃO 1: Adicionando a função de formatação de nome
     const formatarNomeProprio = (nome: string | undefined): string => {
         if (!nome) {
             return "";
@@ -52,7 +47,7 @@ export default function ConteudoDadosPessoais() {
 
         const usuarioId = sessionStorage.getItem('id');
         if (usuarioId) {
-            axios.get<dadosUsuario>(`http://localhost:8080/users/${usuarioId}`)
+            api.get<dadosUsuario>(`/users/${usuarioId}`)
                 .then((response) => {
                     setDados(response.data);
                 })

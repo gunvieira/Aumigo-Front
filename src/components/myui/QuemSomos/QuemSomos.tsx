@@ -1,7 +1,6 @@
 export default function ConteudoQuemSomos() {
     return (
         <div className="flex flex-col items-center py-10 px-4 font-dosis">
-            {/* Bloco 1 */}
             <div
                 className="flex flex-col bg-gray-50 rounded-lg p-10 max-w-xl w-full gap-6 items-center mb-10 transition-discrete duration-1000 shadow-sm hover:shadow-xl">
                 <div className="flex flex-col itens-center justify-center">
@@ -43,9 +42,7 @@ export default function ConteudoQuemSomos() {
                         recebemos permitem que nosso projeto continue existindo.
                     </p>
                 </div>
-
             </div>
-
         </div>
     );
 }

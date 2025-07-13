@@ -6,8 +6,6 @@ export default function Footer() {
     return (
         <section className="bg-teal-700 p-5 text-white">
             <div className="flex flex-col w-full items-center max-w-screen-xl mx-auto px-4 gap-6">
-
-                {/* Logo e título */}
                 <div className="w-fit text-emerald-400 p-3 rounded flex flex-col items-center">
                     <img
                         src="/Imagens/Icons/logo.svg"
@@ -16,18 +14,14 @@ export default function Footer() {
                     />
                     <span className="text-lg font-semibold">Adote um Pet</span>
                 </div>
-
-                {/* Links de navegação */}
                 <div>
                     <ul className="flex flex-row gap-8">
-                        <li><Link to="/" className="hover:underline">Quem Somos</Link></li>
-                        <li><Link to="/sobre" className="hover:underline">Contato</Link></li>
-                        <li><Link to="/contato" className="hover:underline">Adote</Link></li>
-                        <li><Link to="/contato" className="hover:underline">Colabore</Link></li>
+                        <li><Link to="/quem-somos" className="hover:underline">Quem Somos</Link></li>
+                        <li><Link to="/" className="hover:underline">Contato</Link></li>
+                        <li><Link to="/adote" className="hover:underline">Adote</Link></li>
+                        <li><Link to="/colabore" className="hover:underline">Colabore</Link></li>
                     </ul>
                 </div>
-
-                {/* Redes sociais */}
                 <div>
                     <div className="flex gap-8 text-2xl">
                         <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-white/70">
@@ -44,8 +38,6 @@ export default function Footer() {
                         </a>
                     </div>
                 </div>
-
-                {/* Direitos autorais */}
                 <div className="text-sm text-gray-200 mt-4">
                     © 2025 Adote um Pet. Todos os direitos reservados.
                 </div>
